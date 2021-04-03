@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divya D. Jaiswal</title>
+    <link rel="stylesheet" href="style.css">
+	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	<meta name="google-signin-scope" content="profile email">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+	<meta name="google-signin-client_id" content="529514854245-p6k6ha89da9ijgs6fop3ectf9g32d16j.apps.googleusercontent.com">
+	
+</head>
+
+<body>
+    <div class="login-dark">
+		<div class="header-right" id="myheader">
+				<a href="login_signup.html" class="active">Login</a>
+				<a href="sign_up.html" class="active">Sign Up</a>
+        </div>
+			<form>
+				<div class="container">
+					<header class="head-form">
+						<h2>Sign Up</h2>
+						<p>If you aren't a registered user</p>
+					</header>
+					<br>
+					<div class="field-set">
+						<!-- Name -->
+						<span class="input-item">
+							<i class="fa fa-user-circle"></i>
+						</span>
+						<input class="form-input" id="txt-input" type="text" placeholder="Full Name">
+						<br>
+						
+						<!-- Email -->
+						<span class="input-item">
+							<i class="fa fa-envelope"></i>
+						</span>
+						<input class="form-input" id="txt-input" type="text" placeholder="Email Address" required>
+						<br>
+						
+						<!-- Password -->
+						<span class="input-item">
+							<i class="fa fa-key"></i>
+						</span>
+						<input class="form-input" id="pwd" type="password" placeholder="Password" name="password" required>
+						<span class="input-item">
+							<i class="fa fa-eye" aria-hidden="true" type="button" id="eye"></i>
+						</span>
+						<br>
+						
+						<!-- Sign up button -->
+						<button class="sign-up" onclick="showThankYou()">Sign Up</button>
+						
+						<div class="btn submits sign-up g-signin2" data-onsuccess="onSignIn" data-theme="dark">Sign up with google
+							<!-- sign up icon -->
+							<i class="fa fa-user-plus" aria-hidden="true"></i>
+						</div>
+						
+						<script>
+							function onSignIn(googleUser) {
+							// Useful data for your client-side scripts:
+								var profile = googleUser.getBasicProfile();
+								console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+								console.log('Full Name: ' + profile.getName());
+								console.log('Given Name: ' + profile.getGivenName());
+								console.log('Family Name: ' + profile.getFamilyName());
+								console.log("Image URL: " + profile.getImageUrl());
+								console.log("Email: " + profile.getEmail());
+
+								// The ID token you need to pass to your backend:
+								var id_token = googleUser.getAuthResponse().id_token;
+								console.log("ID Token: " + id_token);
+								
+								$.post("backend/createAccount.php", {
+								image: profile.getImageUrl().toString(),
+								name: profile.getName().toString(),
+								email: profile.getEmail().toString(),
+								password: profile.getId().toString()
+								}, function (data, status) {
+									if (data == 'error') {
+										alert('Error');
+									} else if (data == 'success') {
+										sessionStorage.setItem("loggedUser", profile.getEmail().toString());
+										document.location.href='success.html';
+									}
+								});
+							}
+						</script>
+						
+						<a href="#" onclick="signOut();"><div class="btn submits sign-up">Sign out</div></a>
+							<script>
+						  function signOut() {
+							var auth2 = gapi.auth2.getAuthInstance();
+							auth2.signOut().then(function () {
+							  console.log('User signed out.');
+							  //document.location.href='login_signup.html';
+							});
+						  }
+						</script>
+					</div>
+				</div>
+			</form>
+    </div>
+</body>
+
+</html>

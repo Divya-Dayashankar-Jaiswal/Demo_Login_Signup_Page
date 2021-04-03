@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divya D. Jaiswal</title>
+    <link rel="stylesheet" href="style.css">
+	<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	<meta name="google-signin-scope" content="profile email">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+	<meta name="google-signin-client_id" content="529514854245-p6k6ha89da9ijgs6fop3ectf9g32d16j.apps.googleusercontent.com">
+	
+</head>
+
+<body>
+    <div class="login-dark">
+		<div class="header-right" id="myheader">
+				<a href="login_signup.html" class="active">Log - In</a>
+				<a href="sign_up.html" class="active">Sign Up</a>
+        </div>
+			<form>
+				<div class="container">
+					<header class="head-form">
+						<h2>Log - In</h2>
+						<p>If you are an registered user</p>
+					</header>
+					<br>
+					<div class="field-set">
+					<script type="text/javascript">
+						function show() {
+							var p = document.getElementById('pwd');
+							p.setAttribute('type', 'text');
+						}
+
+						function hide() {
+							var p = document.getElementById('pwd');
+							p.setAttribute('type', 'password');
+						}
+
+						var pwShown = 0;
+
+						document.getElementById("eye").addEventListener("click", function () {
+							if (pwShown == 0) {
+								pwShown = 1;
+								show();
+							} else {
+								pwShown = 0;
+								hide();
+							}
+						}, false);
+					</script>
+						<!-- login id -->
+						<span class="input-item">
+							<i class="fa fa-user-circle"></i>
+						</span>
+						<input class="form-input" id="txt-input" type="text" placeholder="@userid">
+						<br>
+							
+						<!-- Password -->
+						<span class="input-item">
+							<i class="fa fa-key"></i>
+						</span>
+						<input class="form-input" id="pwd" type="password" placeholder="Password" name="password">
+						<span class="input-item">
+							<i class="fa fa-eye" aria-hidden="true" type="button" id="eye"></i>
+						</span>
+						<br>
+							
+						<!-- login button -->
+						<button class="log-in">Login</button>
+					</div>
+				
+					<!-- other buttons -->
+					<div class="other">
+						<button class="btn submits frgt-pass"><a href="pass_recover.html">Forgot Password</a></button>
+						
+						<div class="btn submits sign-up g-signin2" data-onsuccess="onSignIn" data-theme="dark">Login with google
+							<!-- sign up icon -->
+							<i class="fa fa-user-plus" aria-hidden="true"></i>
+						</div>
+						
+						<script>
+							function onSignIn(googleUser) {
+							// Useful data for your client-side scripts:
+								var profile = googleUser.getBasicProfile();
+								console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+								console.log('Full Name: ' + profile.getName());
+								console.log('Given Name: ' + profile.getGivenName());
+								console.log('Family Name: ' + profile.getFamilyName());
+								console.log("Image URL: " + profile.getImageUrl());
+								console.log("Email: " + profile.getEmail());
+
+								// The ID token you need to pass to your backend:
+								var id_token = googleUser.getAuthResponse().id_token;
+								console.log("ID Token: " + id_token);
+								
+								sessionStorage.setItem("loggedUser", profile.getEmail().toString());
+							}
+							
+							
+						</script>
+						
+						<a href="#" onclick="signOut();"><div class="btn submits sign-up">Sign out</div></a>
+							<script>
+						  function signOut() {
+							var auth2 = gapi.auth2.getAuthInstance();
+							auth2.signOut().then(function () {
+							  console.log('User signed out.');
+							  //document.location.href='login_signup.html';
+							});
+						  }
+						</script>
+						
+						
+					</div>
+				</div>
+			</form>
+    </div>
+</body>
+
+</html>
